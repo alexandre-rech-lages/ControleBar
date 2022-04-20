@@ -1,6 +1,6 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
 
-namespace ControleBar.ConsoleApp.ModuloMesa
+namespace ControleBar.ConsoleApp.ModuloConta
 {
     public class Conta : EntidadeBase
     {

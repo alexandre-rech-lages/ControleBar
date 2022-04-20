@@ -1,4 +1,5 @@
-﻿using ControleBar.ConsoleApp.ModuloGarcom;
+﻿using ControleBar.ConsoleApp.ModuloConta;
+using ControleBar.ConsoleApp.ModuloGarcom;
 using ControleBar.ConsoleApp.ModuloMesa;
 using ControleBar.ConsoleApp.ModuloProduto;
 using System;

@@ -1,4 +1,5 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
+using ControleBar.ConsoleApp.ModuloConta;
 
 namespace ControleBar.ConsoleApp
 {
@@ -33,6 +34,7 @@ namespace ControleBar.ConsoleApp
                     if (opcaoSelecionada == "4")
                         telaCadastroBasico.VisualizarRegistros("Tela");
                 }
+                
             }
         }
     }

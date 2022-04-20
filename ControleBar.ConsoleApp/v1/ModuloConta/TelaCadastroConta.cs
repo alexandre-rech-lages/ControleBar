@@ -1,8 +1,10 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
 using ControleBar.ConsoleApp.ModuloGarcom;
+using ControleBar.ConsoleApp.ModuloMesa;
 using ControleBar.ConsoleApp.ModuloProduto;
+using System;
 
-namespace ControleBar.ConsoleApp.ModuloMesa
+namespace ControleBar.ConsoleApp.ModuloConta
 {
     internal class TelaCadastroConta : TelaBase
     {
@@ -43,6 +45,20 @@ namespace ControleBar.ConsoleApp.ModuloMesa
             this.notificador = notificador;
         }
 
+        
 
+        public override string MostrarOpcoes()
+        {
+            MostrarTitulo(Titulo);
+
+            //Nova Conta	Adicionar Pedidos	Fechar	Visualizar Contas Abertas	Visualizar Total Faturado Dia	Visualizar Total Gorjetas
+            Console.WriteLine("Digite 1 para Nova Conta");            
+
+            Console.WriteLine("Digite s para sair");
+
+            string opcao = Console.ReadLine();
+
+            return opcao;
+        }
     }
 }
