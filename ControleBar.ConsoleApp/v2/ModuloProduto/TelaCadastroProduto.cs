@@ -97,11 +97,9 @@ namespace ControleBar.ConsoleApp.ModuloProduto
             Console.WriteLine("Informe o nome do produto");
             string nome = Console.ReadLine();
             Console.WriteLine("Informe o preço do produto");
-            double preco = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Informe a quantidade do produto");
-            int quantidade = Convert.ToInt32(Console.ReadLine());
+            decimal preco = Convert.ToDecimal(Console.ReadLine());
 
-            return new Produto(nome, preco, quantidade);
+            return new Produto(nome, preco);
         }
 
         public bool VisualizarRegistros(string tipoVisualizacao)
@@ -120,7 +118,7 @@ namespace ControleBar.ConsoleApp.ModuloProduto
             foreach (Produto prod in produto)
                 Console.WriteLine(prod.ToString());
 
-            Console.ReadLine();
+            Console.WriteLine();
 
             return true;
         }

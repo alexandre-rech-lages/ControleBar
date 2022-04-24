@@ -31,6 +31,23 @@ namespace ControleBar.ConsoleApp.Compartilhado
             telaCadastroMesa = new TelaCadastroMesa(repositorioMesa, notificador);
             telaCadastroConta = new TelaCadastroConta(repositorioConta, repositorioProduto, repositorioGarcom,
                 repositorioMesa, notificador, telaCadastroGarcom, telaCadastroMesa, telaCadastroProduto);
+
+            PopularAplicacao();
+        }
+
+        private void PopularAplicacao()
+        {
+            repositorioGarcom.Inserir(new Garcom("José Roberto", "321654987"));
+            repositorioGarcom.Inserir(new Garcom("João da Silva", "123789456"));
+
+            repositorioProduto.Inserir(new Produto("Cerveja Original", 10));
+            repositorioProduto.Inserir(new Produto("Porção de Batata", 20));
+            repositorioProduto.Inserir(new Produto("Porção de Tilápia", 30));
+            repositorioProduto.Inserir(new Produto("Cachaça Artesanal", 5));
+
+            repositorioMesa.Inserir(new Mesa(1));
+            repositorioMesa.Inserir(new Mesa(2));
+            repositorioMesa.Inserir(new Mesa(3));
         }
 
         public string MostrarOpcoes()

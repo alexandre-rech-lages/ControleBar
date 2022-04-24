@@ -39,9 +39,9 @@ namespace ControleBar.ConsoleApp.ModuloMesa
 
             int numeroGenero = ObterNumeroRegistro();
 
-            Mesa mesaF = ObterMesa();
+            Mesa mesa = ObterMesa();
 
-            bool conseguiuEditar = _repositorioMesa.Editar(numeroGenero, mesaF);
+            bool conseguiuEditar = _repositorioMesa.Editar(numeroGenero, mesa);
 
             if (!conseguiuEditar)
                 _notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
@@ -76,28 +76,28 @@ namespace ControleBar.ConsoleApp.ModuloMesa
             if (tipoVisualizacao == "Tela")
                 MostrarTitulo("Visualização de Mesas Cadastradas");
 
-            List<Mesa> mesasF = _repositorioMesa.SelecionarTodos();
+            List<Mesa> mesas = _repositorioMesa.SelecionarTodos();
 
-            if (mesasF.Count == 0)
+            if (mesas.Count == 0)
             {
                 _notificador.ApresentarMensagem("Nenhum Mesa disponível.", TipoMensagem.Atencao);
                 return false;
             }
 
-            foreach (Mesa mesa in mesasF)
+            foreach (Mesa mesa in mesas)
                 Console.WriteLine(mesa.ToString());
 
-            Console.ReadLine();
+            Console.WriteLine();
 
             return true;
         }
 
         private Mesa ObterMesa()
         {
-            Console.Write("Digite o nome do garçom: ");
-            string nome = Console.ReadLine();
+            Console.Write("Digite o número da Mesa: ");
+            int numero = Convert.ToInt32(Console.ReadLine());
 
-            return new Mesa(nome);
+            return new Mesa(numero);
         }
 
         public int ObterNumeroRegistro()

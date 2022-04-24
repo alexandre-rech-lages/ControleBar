@@ -6,29 +6,22 @@ namespace ControleBar.ConsoleApp.ModuloProduto
     public class Produto : EntidadeBase
     {
         string nome;
-        double preco;
-        int quantidade;
+        decimal preco;
 
         public string Nome { get => nome; }
-        public double Preco { get => preco; }
-        public int Quantidade { get => quantidade; }
+        public decimal Preco { get => preco; }
 
-        public Produto(string nome, double preco, int quantidade)
+        public Produto(string nome, decimal preco)
         {
             this.nome = nome;
             this.preco = preco;
-            this.quantidade = quantidade;
         }
-        public void AtualizarQuantiade(int quantidade)
-        {
-            this.quantidade = quantidade;
-        }
+        
         public override string ToString()
         {
-            return "Id: " + Numero + Environment.NewLine +
-                "Nome do produto: " + Nome + Environment.NewLine +
-                "Preço do produto: R$" + Preco + Environment.NewLine +
-                "Quantidade do produto: R$" + Quantidade + Environment.NewLine;
+            return "Id: " + Numero + "\t" +
+                "Nome do produto: " + Nome + "\t" +
+                "Preço do produto: R$" + Preco ;
         }
     }
 }

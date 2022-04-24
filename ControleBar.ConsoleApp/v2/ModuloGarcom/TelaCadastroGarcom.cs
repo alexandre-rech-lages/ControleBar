@@ -89,7 +89,7 @@ namespace ControleBar.ConsoleApp.ModuloGarcom
             foreach (Garcom garcom in garcons)
                 Console.WriteLine(garcom.ToString());
 
-            Console.ReadLine();
+            Console.WriteLine();
 
             return true;
         }
