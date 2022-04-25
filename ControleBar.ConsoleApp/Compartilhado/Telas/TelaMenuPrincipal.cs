@@ -8,23 +8,27 @@ namespace ControleBar.ConsoleApp.Compartilhado
 {
     public class TelaMenuPrincipal
     {
+        private readonly JsonContext jsonContext;
+
         private readonly IRepositorio<Garcom> repositorioGarcom;
         private readonly IRepositorio<Produto> repositorioProduto;
         private readonly IRepositorio<Mesa> repositorioMesa;
 
-        private readonly RepositorioConta repositorioConta;
+        private readonly IRepositorioConta repositorioConta;
 
         private readonly TelaCadastroGarcom telaCadastroGarcom;
         private readonly TelaCadastroProduto telaCadastroProduto;
         private readonly TelaCadastroConta telaCadastroConta;
         private readonly TelaCadastroMesa telaCadastroMesa;
 
-        public TelaMenuPrincipal(Notificador notificador)
+        public TelaMenuPrincipal(Notificador notificador, JsonContext jsonContext)
         {
-            repositorioGarcom = new RepositorioGarcom();
-            repositorioProduto = new RepositorioProduto();
-            repositorioConta = new RepositorioConta();
-            repositorioMesa = new RepositorioMesa();
+            this.jsonContext = jsonContext;
+
+            repositorioGarcom = new RepositorioGarcomEmArquivo(jsonContext);
+            repositorioProduto = new RepositorioProdutoEmArquivo(jsonContext);
+            repositorioConta = new RepositorioContaEmArquivo(jsonContext);
+            repositorioMesa = new RepositorioMesaEmArquivo(jsonContext);
 
             telaCadastroGarcom = new TelaCadastroGarcom(repositorioGarcom, notificador);
             telaCadastroProduto = new TelaCadastroProduto(repositorioProduto, notificador);
@@ -32,7 +36,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
             telaCadastroConta = new TelaCadastroConta(repositorioConta, repositorioProduto, repositorioGarcom,
                 repositorioMesa, notificador, telaCadastroGarcom, telaCadastroMesa, telaCadastroProduto);
 
-            PopularAplicacao();
+            //PopularAplicacao();
         }
 
         private void PopularAplicacao()
@@ -63,7 +67,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
             Console.WriteLine("Digite 3 para Gerenciar produtos");
             Console.WriteLine("Digite 4 para Gerenciar Contas de mesas de clientes");
 
-            Console.WriteLine("Digite s para sair");
+            Console.WriteLine("Digite s para gravar as informações e sair");
 
             string opcaoSelecionada = Console.ReadLine();
 
@@ -88,9 +92,11 @@ namespace ControleBar.ConsoleApp.Compartilhado
             else if (opcao == "4")
                 tela = telaCadastroConta;
 
-            else if (opcao == "5")
+            else if (opcao == "s")
+            {
                 tela = null;
-
+                jsonContext.Gravar();
+            }
             else
                 return ObterTela();
 

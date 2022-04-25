@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ControleBar.ConsoleApp.Compartilhado
 {
-    public interface IRepositorio<T> where T : EntidadeBase
+    public interface IRepositorio<T> where T : EntidadeBase<T>
     {
         string Inserir(T entidade);
         bool Editar(int idSelecionado, T novaEntidade);

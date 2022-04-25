@@ -1,9 +1,8 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
-using System;
 
 namespace ControleBar.ConsoleApp.ModuloProduto
 {
-    public class Produto : EntidadeBase
+    public class Produto : EntidadeBase<Produto>
     {
         string nome;
         decimal preco;
@@ -16,12 +15,18 @@ namespace ControleBar.ConsoleApp.ModuloProduto
             this.nome = nome;
             this.preco = preco;
         }
-        
+
         public override string ToString()
         {
             return "Id: " + Numero + "\t" +
                 "Nome do produto: " + Nome + "\t" +
-                "Preço do produto: R$" + Preco ;
+                "Preço do produto: R$" + Preco;
+        }
+
+        public override void Atualizar(Produto novaEntidade)
+        {
+            this.nome = novaEntidade.nome;
+            this.preco = novaEntidade.preco;
         }
     }
 }

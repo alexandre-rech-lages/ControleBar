@@ -2,7 +2,7 @@
 
 namespace ControleBar.ConsoleApp.ModuloMesa
 {
-    public class Mesa : EntidadeBase
+    public class Mesa : EntidadeBase<Mesa>
     {
         bool ocupada;
 
@@ -32,6 +32,12 @@ namespace ControleBar.ConsoleApp.ModuloMesa
         public void Ocupar()
         {
             ocupada = true;
+        }
+
+        public override void Atualizar(Mesa novaEntidade)
+        {
+            this.Numero = novaEntidade.Numero;
+            this.ocupada = novaEntidade.ocupada;
         }
     }
 }

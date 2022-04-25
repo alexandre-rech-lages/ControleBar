@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloConta
 {
-    public class Conta : EntidadeBase
+    public class Conta : EntidadeBase<Conta>
     {
         private List<Pedido> pedidos;
 
@@ -32,10 +32,10 @@ namespace ControleBar.ConsoleApp.ModuloConta
             return Aberta == false;
         }
 
-        public Mesa MesaSelecionada { get; }
-        public Garcom GarcomSelecionado { get; }
+        public Mesa MesaSelecionada { get; private set; }
+        public Garcom GarcomSelecionado { get; private set; }
         public List<Pedido> Pedidos { get { return pedidos; } }
-        public DateTime Data { get; private set; } 
+        public DateTime Data { get; private set; }
 
         public decimal ValorGorjeta { get; private set; }
 
@@ -76,6 +76,11 @@ namespace ControleBar.ConsoleApp.ModuloConta
             Aberta = false;
         }
 
-        
+        public override void Atualizar(Conta novaEntidade)
+        {
+            MesaSelecionada = novaEntidade.MesaSelecionada;
+            GarcomSelecionado = novaEntidade.GarcomSelecionado;
+            Data = novaEntidade.Data;
+        }
     }
 }

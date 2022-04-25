@@ -3,36 +3,44 @@ using System.Collections.Generic;
 
 namespace ControleBar.ConsoleApp.Compartilhado
 {
-    public class RepositorioBase<T> : IRepositorio<T> where T : EntidadeBase
+    public abstract class RepositorioEmArquivo<T> : IRepositorio<T> where T : EntidadeBase<T>
     {
-        protected readonly List<T> registros;
+        protected JsonContext _jsonContext;
 
         protected int contadorId;
 
-        public RepositorioBase()
+        public RepositorioEmArquivo(JsonContext jsonContext)
         {
-            registros = new List<T>();
+            _jsonContext = jsonContext;
+            AtualizarContador();
         }
+
+        public abstract List<T> Registros();
+
+        public abstract void AtualizarContador();
 
         public virtual string Inserir(T entidade)
         {
+            var registros = Registros();
+
             entidade.Numero = ++contadorId;
 
             registros.Add(entidade);
 
             return "REGISTRO_VALIDO";
-        }
+        }        
 
         public bool Editar(int idSelecionado, T novaEntidade)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (idSelecionado == entidade.Numero)
                 {
                     novaEntidade.Numero = entidade.Numero;
 
-                    int posicaoParaEditar = registros.IndexOf(entidade);
-                    registros[posicaoParaEditar] = novaEntidade;
+                    entidade.Atualizar(novaEntidade);
 
                     return true;
                 }
@@ -43,14 +51,15 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Editar(Predicate<T> condicao, T novaEntidade)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (condicao(entidade))
                 {
                     novaEntidade.Numero = entidade.Numero;
 
-                    int posicaoParaEditar = registros.IndexOf(entidade);
-                    registros[posicaoParaEditar] = novaEntidade;
+                    entidade.Atualizar(novaEntidade);
 
                     return true;
                 }
@@ -61,6 +70,8 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Excluir(int idSelecionado)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (idSelecionado == entidade.Numero)
@@ -74,6 +85,8 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Excluir(Predicate<T> condicao)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (condicao(entidade))
@@ -87,6 +100,8 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public T SelecionarRegistro(int idSelecionado)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (idSelecionado == entidade.Numero)
@@ -98,6 +113,8 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public T SelecionarRegistro(Predicate<T> condicao)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
             {
                 if (condicao(entidade))
@@ -109,22 +126,26 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public List<T> SelecionarTodos()
         {
-            return registros;
+            return Registros();
         }
 
         public List<T> Filtrar(Predicate<T> condicao)
         {
             List<T> registrosFiltrados = new List<T>();
 
-            foreach (T registro in registros)
-                if (condicao(registro))
-                    registrosFiltrados.Add(registro);
+            var registros = Registros();
+
+            foreach (T entidade in registros)
+                if (condicao(entidade))
+                    registrosFiltrados.Add(entidade);
 
             return registrosFiltrados;
         }
 
         public bool ExisteRegistro(int idSelecionado)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
                 if (idSelecionado == entidade.Numero)
                     return true;
@@ -134,6 +155,8 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool ExisteRegistro(Predicate<T> condicao)
         {
+            var registros = Registros();
+
             foreach (T entidade in registros)
                 if (condicao(entidade))
                     return true;

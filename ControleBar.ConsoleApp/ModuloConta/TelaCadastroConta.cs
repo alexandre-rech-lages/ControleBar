@@ -3,14 +3,14 @@ using ControleBar.ConsoleApp.ModuloGarcom;
 using ControleBar.ConsoleApp.ModuloMesa;
 using ControleBar.ConsoleApp.ModuloProduto;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloConta
 {
     internal class TelaCadastroConta : TelaBase
     {
-        RepositorioConta repositorioConta;
+        IRepositorioConta repositorioConta;
 
         IRepositorio<Mesa> repositorioMesa;
         IRepositorio<Garcom> repositorioGarcom;
@@ -23,7 +23,7 @@ namespace ControleBar.ConsoleApp.ModuloConta
         private readonly Notificador notificador;
 
         public TelaCadastroConta(
-            RepositorioConta repositorioConta,
+            IRepositorioConta repositorioConta,
 
             IRepositorio<Produto> repositorioProduto,
             IRepositorio<Garcom> repositorioGarcom,
@@ -150,9 +150,9 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
             DateTime data = Convert.ToDateTime(Console.ReadLine());
 
-            List<Conta> contas = repositorioConta.SelecionarPorData(data);   
-            
-               
+            List<Conta> contas = repositorioConta.SelecionarPorData(data);
+
+
             var valorFaturamento = contas.Sum(c => c.CalcularValorTotal());
 
             notificador.ApresentarMensagem($"Total arrecadado: {valorFaturamento}", TipoMensagem.Sucesso);
@@ -167,7 +167,7 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
 
         #region métodos privados
-        
+
         private void SelecionarProdutos(Conta conta)
         {
             Console.Write("Selecionar produtos? s/n");

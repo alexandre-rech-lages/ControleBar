@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ControleBar.ConsoleApp.Compartilhado
 {
@@ -27,7 +23,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
         {
             char[] array = nome.ToLower().ToCharArray();
 
-            int qtd=0;
+            int qtd = 0;
 
             foreach (var item in array)
             {

@@ -1,16 +1,26 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
 using ControleBar.ConsoleApp.ModuloConta;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ControleBar.ConsoleApp
 {
     public class Program
     {
+        private static JsonContext jsonContext;
+
+        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            Console.WriteLine("exit");
+            jsonContext.Gravar();
+        }
+
         public static void Main(string[] args)
         {
-            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal(new Notificador());
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+
+            jsonContext = new JsonContext().Carregar();
+
+            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal(new Notificador(), jsonContext);
 
             while (true)
             {

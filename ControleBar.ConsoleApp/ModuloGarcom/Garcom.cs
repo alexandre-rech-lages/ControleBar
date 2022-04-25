@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloGarcom
 {
-    public class Garcom : EntidadeBase
+    public class Garcom : EntidadeBase<Garcom>
     {
         private List<Conta> contasAtendidas;
         public string Nome { get; set; }
         public string CPF { get; set; }
-        public double Gorjeta { get; set; }        
+        public double Gorjeta { get; set; }
 
         public Garcom(string nome, string cpf)
         {
@@ -36,6 +36,12 @@ namespace ControleBar.ConsoleApp.ModuloGarcom
             return contasAtendidas
                 .Where(c => c.Data.Equals(hoje.Date))
                 .Sum(c => c.ValorGorjeta);
+        }
+
+        public override void Atualizar(Garcom novaEntidade)
+        {
+            Nome = novaEntidade.Nome;
+            CPF = novaEntidade.CPF;
         }
     }
 }
