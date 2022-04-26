@@ -5,22 +5,11 @@ using System;
 namespace ControleBar.ConsoleApp
 {
     public class Program
-    {
-        private static JsonContext jsonContext;
-
-        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
-        {
-            Console.WriteLine("exit");
-            jsonContext.Gravar();
-        }
+    {      
 
         public static void Main(string[] args)
-        {
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-
-            jsonContext = new JsonContext().Carregar();
-
-            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal(new Notificador(), jsonContext);
+        {                        
+            TelaMenuPrincipal telaMenuPrincipal = new TelaMenuPrincipal();
 
             while (true)
             {
@@ -79,5 +68,7 @@ namespace ControleBar.ConsoleApp
 
             }
         }
+
+       
     }
 }

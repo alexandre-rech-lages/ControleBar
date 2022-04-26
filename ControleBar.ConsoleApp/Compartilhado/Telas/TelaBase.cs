@@ -42,7 +42,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
         /// </summary>
         /// <param name="mensagem">Mensagem que será aprensentada na tela</param>        
         /// <returns>Valor convertido para o tipo informado</returns>
-        public static T ObterValor<T>(string mensagem)
+        protected static T ObterValor<T>(string mensagem)
         {
             mensagem = mensagem.Trim();
             mensagem = mensagem.Replace(":", "");

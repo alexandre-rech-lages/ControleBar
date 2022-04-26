@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ControleBar.ConsoleApp.Compartilhado
 {
+    //RepositorioBase
     public abstract class RepositorioEmMemoria<T> : IRepositorio<T> where T : EntidadeBase<T>
     {
         protected readonly List<T> registros;

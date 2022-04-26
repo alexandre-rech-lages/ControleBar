@@ -16,6 +16,12 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
     public class RepositorioContaEmMemoria : RepositorioEmMemoria<Conta>, IRepositorioConta
     {
+        //Linq = Language integrated query
+        //System.Linq = Extension Methods de Listas
+        //Projeções com Select armazenando em variáveis declaradas com "var"
+        //Encadeamento de chamadas de métodos linq
+        //Dicionários
+
         public void AbrirNovaConta(Conta conta)
         {
             base.Inserir(conta);
@@ -35,6 +41,13 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
         public List<Conta> SelecionarPorData(DateTime hoje)
         {
+            //System.Linq
+            //var 
+            var registrosAux01 =
+                from r in registros
+                where r.EstaFechada()
+                where r.Data.Equals(hoje)
+                select r.Aberta;
 
             return registros
                 .Where(c => c.EstaFechada())
@@ -44,23 +57,24 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
         public List<GorjetaDoDia> SelecionarGorjetas(DateTime data)
         {
-            return SelecionarPorData(data)
-                    .GroupBy(c => c.GarcomSelecionado)
-                    .Select(x => new GorjetaDoDia(data, x.Key))
-                    .ToList();
+            return 
+                SelecionarPorData(data) //filtro
+                .GroupBy(c => c.GarcomSelecionado) //agrupamento
+                .Select(x => new GorjetaDoDia(data, x.Key))// projeção
+                .ToList(); //conversão
         }
     }
 
     public class RepositorioContaEmArquivo : RepositorioEmArquivo<Conta>, IRepositorioConta
     {
-        public RepositorioContaEmArquivo(JsonContext jsonContext) : base(jsonContext)
+        public RepositorioContaEmArquivo(DataContext dataContext) : base(dataContext)
         {
         }
 
         public override void AtualizarContador()
         {
-            if (_jsonContext.Contas.Count > 0)
-                contadorId = _jsonContext.Contas.Max(x => x.Numero);
+            if (_dataContext.Contas.Count > 0)
+                contadorId = _dataContext.Contas.Max(x => x.Numero);
         }
 
         public void AbrirNovaConta(Conta conta)
@@ -93,6 +107,11 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
         public List<GorjetaDoDia> SelecionarGorjetas(DateTime data)
         {
+            var query = from r in Registros()
+                        where r.EstaFechada()
+                        select r.Data;
+
+
             return SelecionarPorData(data)
                     .GroupBy(c => c.GarcomSelecionado)
                     .Select(x => new GorjetaDoDia(data, x.Key))
@@ -101,7 +120,7 @@ namespace ControleBar.ConsoleApp.ModuloConta
 
         public override List<Conta> Registros()
         {
-            return _jsonContext.Contas;
+            return _dataContext.Contas;
         }
     }
 }

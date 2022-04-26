@@ -10,19 +10,19 @@ namespace ControleBar.ConsoleApp.ModuloProduto
 
     public class RepositorioProdutoEmArquivo : RepositorioEmArquivo<Produto>
     {
-        public RepositorioProdutoEmArquivo(JsonContext jsonContext) : base(jsonContext)
+        public RepositorioProdutoEmArquivo(DataContext dataContext) : base(dataContext)
         {
         }
 
         public override void AtualizarContador()
         {
-            if (_jsonContext.Produtos.Count > 0)
-                contadorId = _jsonContext.Produtos.Max(x => x.Numero);
+            if (_dataContext.Produtos.Count > 0)
+                contadorId = _dataContext.Produtos.Max(x => x.Numero);
         }
 
         public override List<Produto> Registros()
         {
-            return _jsonContext.Produtos;
+            return _dataContext.Produtos;
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using ControleBar.ConsoleApp.ModuloProduto;
+using System;
 
 namespace ControleBar.ConsoleApp.ModuloConta
 {
+    [Serializable]
     public class Pedido
     {
+       
         public Pedido(Produto produto, int qtd)
         {
             Produto = produto;

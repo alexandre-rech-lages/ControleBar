@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloGarcom
 {
+    [Serializable]
     public class Garcom : EntidadeBase<Garcom>
     {
         private List<Conta> contasAtendidas;
@@ -13,6 +14,10 @@ namespace ControleBar.ConsoleApp.ModuloGarcom
         public string CPF { get; set; }
         public double Gorjeta { get; set; }
 
+        public Garcom()
+        {
+
+        }
         public Garcom(string nome, string cpf)
         {
             Nome = nome;

@@ -1,7 +1,9 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
+using System;
 
 namespace ControleBar.ConsoleApp.ModuloProduto
 {
+    [Serializable]
     public class Produto : EntidadeBase<Produto>
     {
         string nome;
@@ -9,7 +11,7 @@ namespace ControleBar.ConsoleApp.ModuloProduto
 
         public string Nome { get => nome; }
         public decimal Preco { get => preco; }
-
+               
         public Produto(string nome, decimal preco)
         {
             this.nome = nome;

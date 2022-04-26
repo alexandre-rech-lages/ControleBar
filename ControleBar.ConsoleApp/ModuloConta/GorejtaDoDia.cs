@@ -3,8 +3,11 @@ using System;
 
 namespace ControleBar.ConsoleApp.ModuloConta
 {
+
+    [Serializable]
     public class GorjetaDoDia
     {
+       
         public GorjetaDoDia(DateTime data, Garcom garcom)
         {
             Garcom = garcom;

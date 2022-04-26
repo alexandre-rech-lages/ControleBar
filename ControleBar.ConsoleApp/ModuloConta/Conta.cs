@@ -8,10 +8,12 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloConta
 {
+    [Serializable]
     public class Conta : EntidadeBase<Conta>
     {
         private List<Pedido> pedidos;
 
+        
         public Conta(Mesa mesaSelecionada, Garcom garcomSelecionado)
         {
             MesaSelecionada = mesaSelecionada;

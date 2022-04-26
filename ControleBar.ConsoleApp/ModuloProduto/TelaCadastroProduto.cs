@@ -94,10 +94,9 @@ namespace ControleBar.ConsoleApp.ModuloProduto
 
         private Produto ObterProduto()
         {
-            Console.WriteLine("Informe o nome do produto");
-            string nome = Console.ReadLine();
-            Console.WriteLine("Informe o preço do produto");
-            decimal preco = Convert.ToDecimal(Console.ReadLine());
+            string nome = ObterValor<string>("Informe o nome do produto");
+
+            decimal preco = ObterValor<decimal>("Informe o preço do produto");
 
             return new Produto(nome, preco);
         }

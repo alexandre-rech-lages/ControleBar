@@ -1,11 +1,14 @@
 ﻿using ControleBar.ConsoleApp.Compartilhado;
+using System;
 
 namespace ControleBar.ConsoleApp.ModuloMesa
 {
+    [Serializable]
     public class Mesa : EntidadeBase<Mesa>
     {
         bool ocupada;
 
+      
         public Mesa(int numero)
         {
             this.Numero = numero;

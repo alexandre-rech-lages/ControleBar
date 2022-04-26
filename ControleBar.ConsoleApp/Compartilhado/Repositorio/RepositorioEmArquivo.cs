@@ -5,13 +5,13 @@ namespace ControleBar.ConsoleApp.Compartilhado
 {
     public abstract class RepositorioEmArquivo<T> : IRepositorio<T> where T : EntidadeBase<T>
     {
-        protected JsonContext _jsonContext;
+        protected DataContext _dataContext;
 
         protected int contadorId;
 
-        public RepositorioEmArquivo(JsonContext jsonContext)
+        public RepositorioEmArquivo(DataContext dataContext)
         {
-            _jsonContext = jsonContext;
+            _dataContext = dataContext;
             AtualizarContador();
         }
 

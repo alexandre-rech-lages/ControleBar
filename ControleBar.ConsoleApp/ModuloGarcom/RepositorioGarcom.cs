@@ -10,19 +10,19 @@ namespace ControleBar.ConsoleApp.ModuloGarcom
 
     public class RepositorioGarcomEmArquivo : RepositorioEmArquivo<Garcom>
     {
-        public RepositorioGarcomEmArquivo(JsonContext jsonContext) : base(jsonContext)
+        public RepositorioGarcomEmArquivo(DataContext dataContext) : base(dataContext)
         {            
         }
 
         public override void AtualizarContador()
         {
-            if (_jsonContext.Garcons.Count > 0)
-                contadorId = _jsonContext.Garcons.Max(x => x.Numero);
+            if (_dataContext.Garcons.Count > 0)
+                contadorId = _dataContext.Garcons.Max(x => x.Numero);
         }
 
         public override List<Garcom> Registros()
         {
-            return _jsonContext.Garcons;
+            return _dataContext.Garcons;
         }
     }
 

@@ -16,14 +16,14 @@ namespace ControleBar.ConsoleApp.ModuloMesa
 
     public class RepositorioMesaEmArquivo : RepositorioEmArquivo<Mesa>
     {
-        public RepositorioMesaEmArquivo(JsonContext jsonContext) : base(jsonContext)
+        public RepositorioMesaEmArquivo(DataContext dataContext) : base(dataContext)
         {
         }
 
         public override void AtualizarContador()
         {
-            if (_jsonContext.Mesas.Count > 0)
-                contadorId = _jsonContext.Mesas.Max(x => x.Numero);
+            if (_dataContext.Mesas.Count > 0)
+                contadorId = _dataContext.Mesas.Max(x => x.Numero);
         }
 
         public override string Inserir(Mesa entidade)
@@ -35,7 +35,7 @@ namespace ControleBar.ConsoleApp.ModuloMesa
 
         public override List<Mesa> Registros()
         {
-            return _jsonContext.Mesas;
+            return _dataContext.Mesas;
         }
     }
 }

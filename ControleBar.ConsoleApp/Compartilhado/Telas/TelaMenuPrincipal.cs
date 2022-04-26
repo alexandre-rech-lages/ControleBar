@@ -8,7 +8,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 {
     public class TelaMenuPrincipal
     {
-        private readonly JsonContext jsonContext;
+        private readonly DataContext dataContext;
 
         private readonly IRepositorio<Garcom> repositorioGarcom;
         private readonly IRepositorio<Produto> repositorioProduto;
@@ -21,22 +21,30 @@ namespace ControleBar.ConsoleApp.Compartilhado
         private readonly TelaCadastroConta telaCadastroConta;
         private readonly TelaCadastroMesa telaCadastroMesa;
 
-        public TelaMenuPrincipal(Notificador notificador, JsonContext jsonContext)
+        public TelaMenuPrincipal()
         {
-            this.jsonContext = jsonContext;
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
 
-            repositorioGarcom = new RepositorioGarcomEmArquivo(jsonContext);
-            repositorioProduto = new RepositorioProdutoEmArquivo(jsonContext);
-            repositorioConta = new RepositorioContaEmArquivo(jsonContext);
-            repositorioMesa = new RepositorioMesaEmArquivo(jsonContext);
+            dataContext = new DataContext();
+            var notificador = new Notificador();
+
+            repositorioGarcom = new RepositorioGarcomEmArquivo(dataContext);
+            repositorioProduto = new RepositorioProdutoEmArquivo(dataContext);
+            repositorioConta = new RepositorioContaEmArquivo(dataContext);
+            repositorioMesa = new RepositorioMesaEmArquivo(dataContext);
 
             telaCadastroGarcom = new TelaCadastroGarcom(repositorioGarcom, notificador);
             telaCadastroProduto = new TelaCadastroProduto(repositorioProduto, notificador);
             telaCadastroMesa = new TelaCadastroMesa(repositorioMesa, notificador);
             telaCadastroConta = new TelaCadastroConta(repositorioConta, repositorioProduto, repositorioGarcom,
                 repositorioMesa, notificador, telaCadastroGarcom, telaCadastroMesa, telaCadastroProduto);
+        }
 
-            //PopularAplicacao();
+        void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            //dataContext.GravarEmJson();
+            dataContext.GravarEmXml();
+            //dataContext.GravarEmJson();
         }
 
         private void PopularAplicacao()
@@ -95,13 +103,13 @@ namespace ControleBar.ConsoleApp.Compartilhado
             else if (opcao == "s")
             {
                 tela = null;
-                jsonContext.Gravar();
             }
             else
                 return ObterTela();
 
             return tela;
         }
+
 
 
     }
