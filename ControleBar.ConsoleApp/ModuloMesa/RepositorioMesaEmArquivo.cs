@@ -4,15 +4,6 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloMesa
 {
-    public class RepositorioMesaEmMemoria : RepositorioEmMemoria<Mesa>
-    {     
-        public override string Inserir(Mesa entidade)
-        {
-            registros.Add(entidade);
-
-            return "REGISTRO_VALIDO";
-        }
-    }
 
     public class RepositorioMesaEmArquivo : RepositorioEmArquivo<Mesa>
     {
@@ -28,12 +19,12 @@ namespace ControleBar.ConsoleApp.ModuloMesa
 
         public override string Inserir(Mesa entidade)
         {
-            Registros().Add(entidade);
+            ObterRegistros().Add(entidade);
 
             return "REGISTRO_VALIDO";
         }
 
-        public override List<Mesa> Registros()
+        public override List<Mesa> ObterRegistros()
         {
             return _dataContext.Mesas;
         }

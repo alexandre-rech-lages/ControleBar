@@ -23,8 +23,6 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public TelaMenuPrincipal()
         {
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-
             dataContext = new DataContext();
             var notificador = new Notificador();
 
@@ -40,12 +38,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
                 repositorioMesa, notificador, telaCadastroGarcom, telaCadastroMesa, telaCadastroProduto);
         }
 
-        void CurrentDomain_ProcessExit(object sender, EventArgs e)
-        {
-            //dataContext.GravarEmJson();
-            dataContext.GravarEmXml();
-            //dataContext.GravarEmJson();
-        }
+        
 
         private void PopularAplicacao()
         {
@@ -102,6 +95,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
             else if (opcao == "s")
             {
+                dataContext.GravarBinario();
                 tela = null;
             }
             else

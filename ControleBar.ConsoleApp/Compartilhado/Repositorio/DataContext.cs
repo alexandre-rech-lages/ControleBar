@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 namespace ControleBar.ConsoleApp.Compartilhado
 {
     [Serializable]
-    public class DataContext
+    public class DataContext //classe container
     {
         private List<Garcom> garcons;
         private List<Produto> produtos;
@@ -30,7 +30,6 @@ namespace ControleBar.ConsoleApp.Compartilhado
                 return garcons;
             }
         }
-
         public List<Produto> Produtos
         {
             get
@@ -63,6 +62,11 @@ namespace ControleBar.ConsoleApp.Compartilhado
             }
         }
 
+        public DataContext()
+        {
+            CarregarBinario();
+        }
+        
         public void GravarEmJson()
         {
             var settings = new JsonSerializerSettings
@@ -74,53 +78,6 @@ namespace ControleBar.ConsoleApp.Compartilhado
             var arquivo = JsonConvert.SerializeObject(this, settings);
 
             File.WriteAllText(Environment.CurrentDirectory + "\\arquivo.json", arquivo);
-        }
-
-        public DataContext CarregarJson()
-        {
-            var settings = new JsonSerializerSettings
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.All,
-                Formatting = Formatting.Indented,
-            };
-
-            if (File.Exists(Environment.CurrentDirectory + "\\arquivo.json"))
-            {
-                var arquivo = File.ReadAllText(Environment.CurrentDirectory + "\\arquivo.json");
-
-                return JsonConvert.DeserializeObject<DataContext>(arquivo, settings);
-            }
-
-            return new DataContext();
-        }
-
-        public void GravarBinario()
-        {
-            var arquivo = Environment.CurrentDirectory + "\\arquivo.bin";
-
-            using (FileStream fs = new FileStream(arquivo, FileMode.OpenOrCreate))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                formatter.Serialize(fs, this);
-            }
-        }
-
-        public DataContext CarregarBinario()
-        {
-            var arquivo = Environment.CurrentDirectory + "\\arquivo.bin";
-
-            if (File.Exists(arquivo))
-            {
-                using (FileStream fs = new FileStream(arquivo, FileMode.Open, FileAccess.Read))
-                {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    if (fs.Length > 0)
-                        return (DataContext)formatter.Deserialize(fs);
-                }
-            }
-
-            return new DataContext();
         }
 
         public void GravarEmXml()
@@ -135,7 +92,57 @@ namespace ControleBar.ConsoleApp.Compartilhado
             }
         }
 
-        public DataContext CarregarXml()
+        public void GravarBinario()
+        {
+            var arquivo = Environment.CurrentDirectory + "\\arquivo.bin";
+
+            using (FileStream fs = new FileStream(arquivo, FileMode.OpenOrCreate))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(fs, this);
+            }
+        }
+
+        #region métodos privados
+        private void CarregarBinario()
+        {
+            var arquivo = Environment.CurrentDirectory + "\\arquivo.bin";
+
+            if (File.Exists(arquivo))
+            {
+                using (FileStream fs = new FileStream(arquivo, FileMode.Open, FileAccess.Read))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    if (fs.Length > 0)
+                    {
+                        var ctx = (DataContext)formatter.Deserialize(fs);
+
+                        CarregarDoContexto(ctx);
+                    }
+                }
+            }
+        }
+
+        private void CarregarJson()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                Formatting = Formatting.Indented,
+            };
+
+            if (File.Exists(Environment.CurrentDirectory + "\\arquivo.json"))
+            {
+                var arquivo = File.ReadAllText(Environment.CurrentDirectory + "\\arquivo.json");
+
+                var ctx = JsonConvert.DeserializeObject<DataContext>(arquivo, settings);
+
+                CarregarDoContexto(ctx);
+            }
+        }
+        
+        private DataContext CarregarXml()
         {
             var arquivo = Environment.CurrentDirectory + "\\arquivo.xml";
 
@@ -145,12 +152,25 @@ namespace ControleBar.ConsoleApp.Compartilhado
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContext));
 
-                    if (fs.Length > 0)
-                        return (DataContext)xmlSerializer.Deserialize(fs);
+                    if (fs.Length > 0) {                         
+                        var ctx = (DataContext)xmlSerializer.Deserialize(fs);
+
+                        CarregarDoContexto(ctx);
+                    }
                 }
             }
 
             return new DataContext();
         }
+
+        private void CarregarDoContexto(DataContext ctx)
+        {
+            garcons = ctx.Garcons;
+            produtos = ctx.Produtos;
+            mesas = ctx.Mesas;
+            contas = ctx.Contas;
+        }
+
+        #endregion  
     }
 }

@@ -15,24 +15,24 @@ namespace ControleBar.ConsoleApp.Compartilhado
             AtualizarContador();
         }
 
-        public abstract List<T> Registros();
+        public abstract List<T> ObterRegistros();
 
         public abstract void AtualizarContador();
 
         public virtual string Inserir(T entidade)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             entidade.Numero = ++contadorId;
 
             registros.Add(entidade);
 
             return "REGISTRO_VALIDO";
-        }        
+        }
 
         public bool Editar(int idSelecionado, T novaEntidade)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -51,7 +51,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Editar(Predicate<T> condicao, T novaEntidade)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -70,7 +70,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Excluir(int idSelecionado)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -85,7 +85,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool Excluir(Predicate<T> condicao)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -100,7 +100,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public T SelecionarRegistro(int idSelecionado)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -113,7 +113,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public T SelecionarRegistro(Predicate<T> condicao)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
             {
@@ -126,14 +126,14 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public List<T> SelecionarTodos()
         {
-            return Registros();
+            return ObterRegistros();
         }
 
         public List<T> Filtrar(Predicate<T> condicao)
         {
             List<T> registrosFiltrados = new List<T>();
 
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
                 if (condicao(entidade))
@@ -144,7 +144,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool ExisteRegistro(int idSelecionado)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
                 if (idSelecionado == entidade.Numero)
@@ -155,7 +155,7 @@ namespace ControleBar.ConsoleApp.Compartilhado
 
         public bool ExisteRegistro(Predicate<T> condicao)
         {
-            var registros = Registros();
+            var registros = ObterRegistros();
 
             foreach (T entidade in registros)
                 if (condicao(entidade))

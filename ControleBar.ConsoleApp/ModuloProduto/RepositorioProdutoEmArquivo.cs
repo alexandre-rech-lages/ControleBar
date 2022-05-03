@@ -4,9 +4,6 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloProduto
 {
-    public class RepositorioProdutoEmMemoria : RepositorioEmMemoria<Produto>
-    {
-    }
 
     public class RepositorioProdutoEmArquivo : RepositorioEmArquivo<Produto>
     {
@@ -20,7 +17,7 @@ namespace ControleBar.ConsoleApp.ModuloProduto
                 contadorId = _dataContext.Produtos.Max(x => x.Numero);
         }
 
-        public override List<Produto> Registros()
+        public override List<Produto> ObterRegistros()
         {
             return _dataContext.Produtos;
         }

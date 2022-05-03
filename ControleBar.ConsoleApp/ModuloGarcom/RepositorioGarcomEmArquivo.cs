@@ -4,9 +4,6 @@ using System.Linq;
 
 namespace ControleBar.ConsoleApp.ModuloGarcom
 {
-    public class RepositorioGarcomEmMemoria : RepositorioEmMemoria<Garcom>
-    {
-    }
 
     public class RepositorioGarcomEmArquivo : RepositorioEmArquivo<Garcom>
     {
@@ -20,7 +17,7 @@ namespace ControleBar.ConsoleApp.ModuloGarcom
                 contadorId = _dataContext.Garcons.Max(x => x.Numero);
         }
 
-        public override List<Garcom> Registros()
+        public override List<Garcom> ObterRegistros()
         {
             return _dataContext.Garcons;
         }
